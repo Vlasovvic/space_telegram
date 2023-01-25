@@ -9,7 +9,8 @@ def main():
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
 
     bot = telegram.Bot(token=telegram_token)
-    bot.send_message(chat_id=chat_id, text="sample_text")
+    message = bot.send_photo(chat_id=chat_id, photo=open("images/epic_0.png", 'rb'))
+
 
 if __name__ == "__main__":
     main()
