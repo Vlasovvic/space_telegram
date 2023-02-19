@@ -4,7 +4,7 @@ import argparse
 from dotenv import load_dotenv
 from os import getenv
 
-import common_use_functions
+import download
 
 
 def fetch_nasa_epic(nasa_token, date):
@@ -39,8 +39,8 @@ def main():
     epic_images = fetch_nasa_epic(nasa_token, args.date)
     payload = {'api_key': nasa_token}
     for image_number, image in enumerate(epic_images):
-        file_extension = common_use_functions.get_file_extension(image)
-        common_use_functions.download_image(f"epic_{image_number}{file_extension}", image, "images", payload)
+        file_extension = download.get_file_extension(image)
+        download.download_image(f"epic_{image_number}{file_extension}", image, "images", payload)
 
 
 

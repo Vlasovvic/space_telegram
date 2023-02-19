@@ -2,7 +2,7 @@ import requests
 from dotenv import load_dotenv
 from os import getenv
 
-import common_use_functions
+import download
 
 
 def fetch_nasa_apod(nasa_token):
@@ -23,8 +23,8 @@ def main():
     nasa_token = getenv("NASA_TOKEN")
     nasa_images = fetch_nasa_apod(nasa_token)
     for image_number, image in enumerate(nasa_images):
-        file_extension = common_use_functions.get_file_extension(image)
-        common_use_functions.download_image(f"nasa_{image_number}{file_extension}", image, "images", None)
+        file_extension = download.get_file_extension(image)
+        download.download_image(f"nasa_{image_number}{file_extension}", image, "images", None)
 
 
 if __name__ == "__main__":
