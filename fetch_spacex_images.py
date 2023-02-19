@@ -28,5 +28,6 @@ def main():
     else:
         print("current launch haven't photos")
 
+
 if __name__ == "__main__":
     main()

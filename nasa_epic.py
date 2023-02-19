@@ -30,6 +30,7 @@ def fetch_nasa_epic(nasa_token, date):
             print(f"error:{e}, content = {content}")
     return nasa_images
 
+
 def main():
     load_dotenv()
     nasa_token = getenv("NASA_TOKEN")
@@ -41,7 +42,6 @@ def main():
     for image_number, image in enumerate(epic_images):
         file_extension = download.get_file_extension(image)
         download.download_image(f"epic_{image_number}{file_extension}", image, "images", payload)
-
 
 
 if __name__ == "__main__":
