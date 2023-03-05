@@ -7,6 +7,7 @@ import argparse
 
 import telegram_bot
 import download_functions
+import telegram
 
 
 def main():
@@ -16,18 +17,26 @@ def main():
     frequency = int(os.getenv("FREQUENCY"))
 
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument("--frequency", help="set publication frequency")
+    parser.add_argument("--frequency", help="set publication frequency", default=14400)
     args = parser.parse_args()
     folder = "images"
-    images_list = download.get_images_list(folder)
+    images_list = download_functions.get_images_list(folder)
 
     while True:
-
-        if args.frequency:
-            telegram_bot.send_document(telegram_token, chat_id, images_list, args.frequency)
-        else:
-            telegram_bot.send_document(telegram_token, chat_id, images_list, frequency)
-        random.shuffle(images_list)
+        try:
+            if args.frequency:
+                telegram_bot.send_document(telegram_token, chat_id, images_list, args.frequency)
+            else:
+                telegram_bot.send_document(telegram_token, chat_id, images_list, frequency)
+            random.shuffle(images_list)
+        except telegram.error.NetworkError as e:
+            for attempt in range(2):
+                if telegram.Bot.answerCallbackQuery:
+                    break
+                else:
+                    print(f"error: {e}, reconnect attempt={attempt}")
+        print("out of attempts, exit")
+        exit()
 
 
 if __name__ == "__main__":
