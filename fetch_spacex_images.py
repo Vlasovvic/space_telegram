@@ -5,10 +5,7 @@ import download
 
 
 def fetch_spacex_last_launch(spacexid):
-    if spacexid:
-        url = f"https://api.spacexdata.com/v5/launches/{spacexid}"
-    else:
-        url = "https://api.spacexdata.com/v5/launches/latest"
+    url = f"https://api.spacexdata.com/v5/launches/{spacexid}"
     response = requests.get(url)
     response.raise_for_status()
     spacex_content = response.json()
@@ -18,7 +15,7 @@ def fetch_spacex_last_launch(spacexid):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--spacexid", help="launch spacex id")
+    parser.add_argument("--spacexid", help="launch spacex id", default="latest")
     args = parser.parse_args()
     spacex_images = fetch_spacex_last_launch(args.spacexid)
     if spacex_images:
