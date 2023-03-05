@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-
+from datetime import datetime
 import argparse
 
 import download_functions
@@ -15,14 +15,16 @@ def main():
     nasa_token = os.environ["NASA_TOKEN"]
 
     # init
+    format_today = datetime.today().strftime("%Y-%m-%d")
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument("--date", help="date in format YYYY-MM-DD")
-    parser.add_argument("--spacexid", help="specific spacex launch id")
+    parser.add_argument("--date", help="date in format YYYY-MM-DD", default=format_today)
+    parser.add_argument("--spacexid", help="specific spacex launch id", default="latest")
+    parser.add_argument("--count", help="set APOD photos count", default=30)
     args = parser.parse_args()
     folder = "images"
 
     # download
-    nasa_images = nasa_apod.fetch_nasa_apod(nasa_token)
+    nasa_images = nasa_apod.fetch_nasa_apod(nasa_token, args.count)
     for image_number, image in enumerate(nasa_images):
         file_extension = download_functions.get_file_extension(image)
         download_functions.download_image(f"nasa_{image_number}{file_extension}", image, folder, None)
