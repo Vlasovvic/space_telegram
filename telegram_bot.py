@@ -24,17 +24,26 @@ def main():
     load_dotenv()
     telegram_token = os.environ["TELEGRAM_TOKEN"]
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
-    frequency = int(os.getenv("FREQUENCY"))
 
     parser = argparse.ArgumentParser(description="")
     parser.add_argument("--frequency", help="set publication frequency", default=14400)
     args = parser.parse_args()
 
     bot = telegram.Bot(token=telegram_token)
+
     while True:
-        images_list = download_functions.get_images_list("images")
-        message = send_document(telegram_token, chat_id, images_list, args.frequncy)
-        random.shuffle(images_list)
+        try:
+            images_list = download_functions.get_images_list("images")
+            message = send_document(telegram_token, chat_id, images_list, args.frequncy)
+            random.shuffle(images_list)
+        except telegram.error.NetworkError as e:
+            for attempt in range(2):
+                if bot.answerCallbackQuery:
+                    break
+                else:
+                    print(f"error: {e}, reconnect attempt={attempt}")
+            print("out of attempts, exit")
+            exit()
 
 
 if __name__ == "__main__":
