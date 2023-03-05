@@ -4,9 +4,9 @@ import argparse
 import download
 
 
-def fetch_spacex_last_launch(id):
-    if id:
-        url = f"https://api.spacexdata.com/v5/launches/{id}"
+def fetch_spacex_last_launch(spacexid):
+    if spacexid:
+        url = f"https://api.spacexdata.com/v5/launches/{spacexid}"
     else:
         url = "https://api.spacexdata.com/v5/launches/latest"
     response = requests.get(f"{url}")
@@ -18,9 +18,9 @@ def fetch_spacex_last_launch(id):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--id", help="launch id")
+    parser.add_argument("--spacexid", help="launch spacex id")
     args = parser.parse_args()
-    spacex_images = fetch_spacex_last_launch(args.id)
+    spacex_images = fetch_spacex_last_launch(args.spacexid)
     if spacex_images:
         for image_number, image in enumerate(spacex_images):
             file_extension = download.get_file_extension(image)
