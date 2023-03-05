@@ -14,8 +14,8 @@ def send_document(token, chat_id, images, sleep):
 
 def main():
     load_dotenv()
-    telegram_token = os.getenv("TELEGRAM_TOKEN")
-    chat_id = os.getenv("TELEGRAM_CHAT_ID")
+    telegram_token = os.environ["TELEGRAM_TOKEN"]
+    chat_id = os.environ["TELEGRAM_CHAT_ID"]
 
     bot = telegram.Bot(token=telegram_token)
     while True:

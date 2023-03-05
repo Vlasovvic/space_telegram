@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 import argparse
 from dotenv import load_dotenv
-from os import getenv
+from os import environ
 
 import download
 
@@ -33,7 +33,7 @@ def fetch_nasa_epic(nasa_token, date):
 
 def main():
     load_dotenv()
-    nasa_token = getenv("NASA_TOKEN")
+    nasa_token = environ["NASA_TOKEN"]
     parser = argparse.ArgumentParser(description="")
     parser.add_argument("--date", help="date in format YYYY-MM-DD", type=str)
     args = parser.parse_args()
