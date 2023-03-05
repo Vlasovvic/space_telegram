@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import time
+from pathlib import Path
 
 import telegram
 
@@ -8,7 +9,8 @@ import telegram
 def send_document(token, chat_id, images, sleep):
     bot = telegram.Bot(token=token)
     for image in images:
-        with open(f'images/{image}', 'rb') as document:
+        image_path = Path("images", image)
+        with open(image_path, 'rb') as document:
             bot.send_document(chat_id=chat_id, document=document)
             time.sleep(sleep)
 
