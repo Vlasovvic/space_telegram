@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import argparse
 
 import telegram_bot
-import download
+import download_functions
 
 
 def main():

@@ -1,7 +1,7 @@
 import requests
 import argparse
 
-import download
+import download_functions
 
 
 def fetch_spacex_last_launch(spacexid):
@@ -20,8 +20,8 @@ def main():
     spacex_images = fetch_spacex_last_launch(args.spacexid)
     if spacex_images:
         for image_number, image in enumerate(spacex_images):
-            file_extension = download.get_file_extension(image)
-            download.download_image(f"spacex_{image_number}{file_extension}", image, "images", None)
+            file_extension = download_functions.get_file_extension(image)
+            download_functions.download_image(f"spacex_{image_number}{file_extension}", image, "images", None)
     else:
         print("current launch haven't photos")
 

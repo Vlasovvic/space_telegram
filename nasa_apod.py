@@ -2,7 +2,7 @@ import requests
 from dotenv import load_dotenv
 from os import environ
 
-import download
+import download_functions
 
 
 def fetch_nasa_apod(nasa_token):
@@ -23,8 +23,8 @@ def main():
     nasa_token = environ["NASA_TOKEN"]
     nasa_images = fetch_nasa_apod(nasa_token)
     for image_number, image in enumerate(nasa_images):
-        file_extension = download.get_file_extension(image)
-        download.download_image(f"nasa_{image_number}{file_extension}", image, "images", None)
+        file_extension = download_functions.get_file_extension(image)
+        download_functions.download_image(f"nasa_{image_number}{file_extension}", image, "images", None)
 
 
 if __name__ == "__main__":
