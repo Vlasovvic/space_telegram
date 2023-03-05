@@ -8,8 +8,9 @@ import telegram
 def send_document(token, chat_id, images, sleep):
     bot = telegram.Bot(token=token)
     for image in images:
-        bot.send_document(chat_id=chat_id, document=open(f'images/{image}', 'rb'))
-        time.sleep(sleep)
+        with open(f'images/{image}', 'rb') as document:
+            bot.send_document(chat_id=chat_id, document=document)
+            time.sleep(sleep)
 
 
 def main():
