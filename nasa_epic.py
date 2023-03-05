@@ -18,10 +18,8 @@ def fetch_nasa_epic(nasa_token, date):
         try:
             image_time, image_name = content['date'], content['image']
             a_date_time = datetime.fromisoformat(image_time)
-            a_date_time = a_date_time.strftime("%Y-%m-%d")
-            a_date_time = a_date_time.split("-")
-            request_year, request_month, request_day = a_date_time[0], a_date_time[1], a_date_time[2]
-            image_url = f"https://api.nasa.gov/EPIC/archive/natural/{request_year}/{request_month}/{request_day}/png/{image_name}.png"
+            a_date_time = a_date_time.strftime("%Y/%m/%d")
+            image_url = f"https://api.nasa.gov/EPIC/archive/natural/{a_date_time}/png/{image_name}.png"
             nasa_images.append(image_url)
         except BaseException as e:
             print(f"error:{e}, content = {content}")
