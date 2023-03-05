@@ -10,11 +10,8 @@ import download
 def fetch_nasa_epic(nasa_token, date):
     nasa_images = []
     payload = {"api_key": nasa_token}
-    if date:
-        url = f"https://api.nasa.gov/EPIC/api/natural/date/{date}"
-    else:
-        url = "https://api.nasa.gov/EPIC/api/natural"
-    response = requests.get(f"{url}", params=payload)
+    url = f"https://api.nasa.gov/EPIC/api/natural/date/{date}"
+    response = requests.get(url, params=payload)
     response.raise_for_status()
     nasa_content = response.json()
     for content in nasa_content:
@@ -35,7 +32,8 @@ def main():
     load_dotenv()
     nasa_token = environ["NASA_TOKEN"]
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument("--date", help="date in format YYYY-MM-DD", type=str)
+    format_today = datetime.today().strftime("%Y-%m-%d")
+    parser.add_argument("--date", help="date in format YYYY-MM-DD", type=str, default=format_today)
     args = parser.parse_args()
     epic_images = fetch_nasa_epic(nasa_token, args.date)
     payload = {'api_key': nasa_token}
