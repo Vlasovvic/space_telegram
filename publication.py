@@ -1,5 +1,6 @@
 import os
 import random
+import time
 
 from dotenv import load_dotenv
 
@@ -30,13 +31,12 @@ def main():
                 telegram_bot.send_document(telegram_token, chat_id, images_list, frequency)
             random.shuffle(images_list)
         except telegram.error.NetworkError as e:
-            for attempt in range(2):
-                if telegram.Bot.answerCallbackQuery:
-                    break
-                else:
-                    print(f"error: {e}, reconnect attempt={attempt}")
-        print("out of attempts, exit")
-        exit()
+            attempt = 0
+            if telegram.Bot.answerCallbackQuery:
+                break
+            else:
+                print(f"error: {e}, reconnect attempt={attempt}")
+                time.sleep(15)
 
 
 if __name__ == "__main__":

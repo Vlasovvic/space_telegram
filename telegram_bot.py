@@ -37,13 +37,13 @@ def main():
             message = send_document(telegram_token, chat_id, images_list, args.frequncy)
             random.shuffle(images_list)
         except telegram.error.NetworkError as e:
-            for attempt in range(2):
-                if bot.answerCallbackQuery:
+            attempt = 0
+            while True:
+                if telegram.Bot.answerCallbackQuery:
                     break
                 else:
                     print(f"error: {e}, reconnect attempt={attempt}")
-            print("out of attempts, exit")
-            exit()
+                    time.sleep(15)
 
 
 if __name__ == "__main__":
