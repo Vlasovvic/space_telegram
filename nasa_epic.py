@@ -21,7 +21,7 @@ def fetch_nasa_epic(nasa_token, date):
             a_date_time = a_date_time.strftime("%Y/%m/%d")
             image_url = f"https://api.nasa.gov/EPIC/archive/natural/{a_date_time}/png/{image_name}.png"
             nasa_images.append(image_url)
-        except BaseException as e:
+        except ConnectionError as e:
             print(f"error:{e}, content = {content}")
     return nasa_images
 
