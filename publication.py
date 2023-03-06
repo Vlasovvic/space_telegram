@@ -15,7 +15,6 @@ def main():
     load_dotenv()
     telegram_token = os.environ["TELEGRAM_TOKEN"]
     chat_id = os.environ["TELEGRAM_CHAT_ID"]
-    frequency = int(os.getenv("FREQUENCY"))
 
     parser = argparse.ArgumentParser(description="")
     parser.add_argument("--frequency", help="set publication frequency", default=14400)
@@ -25,10 +24,7 @@ def main():
 
     while True:
         try:
-            if args.frequency:
-                telegram_bot.send_document(telegram_token, chat_id, images_list, args.frequency)
-            else:
-                telegram_bot.send_document(telegram_token, chat_id, images_list, frequency)
+            telegram_bot.send_document(telegram_token, chat_id, images_list, args.frequency)
             random.shuffle(images_list)
         except telegram.error.NetworkError as e:
             attempt = 0
